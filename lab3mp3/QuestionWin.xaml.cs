@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static lab3mp3.Data.MongoCRUD;
 
 namespace lab3mp3
 {
@@ -22,7 +23,11 @@ namespace lab3mp3
     {
         Question newquestion1 = new Question();
         jsonHelper js = new jsonHelper();
+        string qz = "quiz";
+
+        static MongoCrud db = new MongoCrud("quizdb");
         Quiz NewQuiz = new Quiz();
+        List<Quiz> quizes = new List<Quiz>();
         List<Question> NewQuestions = new List<Question>();
         int correctAwser;
         int nummersofwin=0;
@@ -85,14 +90,15 @@ namespace lab3mp3
         {
             NewQuestions = await js.LoadQuestions();
             NewQuiz._questions = NewQuestions;
+            quizes = db.GetAllQuiz("quiz");
         
             
-                statment.Text = NewQuiz._questions[0].Statement;
-                awnser1.Content = NewQuiz._questions[0].Answers[0];
-                awnser2.Content = NewQuiz._questions[0].Answers[1];
-                awnser3.Content = NewQuiz._questions[0].Answers[2];
-                awnser4.Content = NewQuiz._questions[0].Answers[3];
-                correctAwser = NewQuiz._questions[0].CorrectAnswer;
+                statment.Text = quizes[quizes.Count-1]._questions[0].Statement;
+                awnser1.Content = quizes[quizes.Count - 1]._questions[0].Answers[0];
+                awnser2.Content = quizes[quizes.Count - 1]._questions[0].Answers[1];
+                awnser3.Content = quizes[quizes.Count - 1]._questions[0].Answers[2];
+                awnser4.Content = quizes[quizes.Count - 1]._questions[0].Answers[3];
+                correctAwser = quizes[quizes.Count - 1]._questions[0].CorrectAnswer;
 
             
         }
@@ -102,17 +108,17 @@ namespace lab3mp3
             if (nummersofwin < NewQuiz._questions.Count)
             {
 
-                statment.Text = NewQuiz._questions[nummersofwin].Statement;
-                awnser1.Content = NewQuiz._questions[nummersofwin].Answers[0];
-                awnser2.Content = NewQuiz._questions[nummersofwin].Answers[1];
-                awnser3.Content = NewQuiz._questions[nummersofwin].Answers[2];
-                awnser4.Content = NewQuiz._questions[nummersofwin].Answers[3];
-                correctAwser = NewQuiz._questions[nummersofwin].CorrectAnswer;
+                statment.Text = quizes[quizes.Count - 1]._questions[nummersofwin].Statement;
+                awnser1.Content = quizes[quizes.Count - 1]._questions[nummersofwin].Answers[0];
+                awnser2.Content = quizes[quizes.Count - 1]._questions[nummersofwin].Answers[1];
+                awnser3.Content = quizes[quizes.Count - 1]._questions[nummersofwin].Answers[2];
+                awnser4.Content = quizes[quizes.Count - 1]._questions[nummersofwin].Answers[3];
+                correctAwser = quizes[quizes.Count - 1]._questions[nummersofwin].CorrectAnswer;
             }
             else 
             { 
                 Close();
-                double Nrqustions = (double)NewQuiz._questions.Count;
+                double Nrqustions = (double)quizes[quizes.Count - 1]._questions.Count;
                 double result = (nrCorrrectAwnsers / Nrqustions)*100;
                 MessageBox.Show(string.Concat(result)+ " %");
             }

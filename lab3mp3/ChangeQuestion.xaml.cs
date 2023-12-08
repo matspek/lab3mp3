@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static lab3mp3.Data.MongoCRUD;
 
 namespace lab3mp3
 {
@@ -22,6 +23,7 @@ namespace lab3mp3
         jsonHelper js = new jsonHelper();
         Quiz NewQuiz = new Quiz();
         List<Question> NewQuestions = new List<Question>();
+        static MongoCrud db = new MongoCrud("quizdb");
         public ChangeQuestion()
         {
             InitializeComponent();
@@ -39,16 +41,16 @@ namespace lab3mp3
             q1.Answers[3]= Awnser4.Text;
             if (awnser1Corrent.IsChecked==true)
             {
-                q1.CorrectAnswer = 0;
+                q1.CorrectAnswer = 1;
             } else if (awnser2Corrent.IsChecked == true)
             {
-                q1.CorrectAnswer = 1;
+                q1.CorrectAnswer = 2;
             } else if (awnser3Corrent.IsChecked == true)
             {
-                q1.CorrectAnswer = 2;
+                q1.CorrectAnswer = 3;
             } else if (awnser4Corrent.IsChecked == true)
                 {
-                q1.CorrectAnswer = 3;
+                q1.CorrectAnswer = 4;
             }else
             {
                 MessageBox.Show("No correct awnser selected");
@@ -57,12 +59,22 @@ namespace lab3mp3
             
             NewQuiz._questions.Add(q1);
             js.SaveQuestions(NewQuiz._questions);
+
+            var result=db.GetAllQuiz("quiz");
+            result[0]._questions.Add(q1);
+
+            db.UpdateQuiz("quiz", result[0]);
             Close();    
         }
         public async Task LoadQuestions()
         {
             NewQuestions = await js.LoadQuestions();
             NewQuiz._questions = NewQuestions;
+        }
+
+        private void ClearDatabasetn_Click(object sender, RoutedEventArgs e)
+        {
+            db.ClearDatabase("quiz");
         }
     }
     }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static lab3mp3.Data.MongoCRUD;
 using static System.Collections.Specialized.BitVector32;
 
 namespace lab3mp3
@@ -23,7 +24,8 @@ namespace lab3mp3
     {
         jsonHelper js = new jsonHelper();
         Quiz NewQuiz= new Quiz();
-        List<Question> NewQuestions = new List<Question>();          
+        List<Question> NewQuestions = new List<Question>();
+        static MongoCrud db = new MongoCrud("quizdb");
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +43,7 @@ namespace lab3mp3
         {
             NewQuestions = await js.LoadQuestions();
             NewQuiz._questions = NewQuestions;
+            db.AddQuiz("quiz", NewQuiz);
         }
 
         private void ChangeQuestion_Click(object sender, RoutedEventArgs e)

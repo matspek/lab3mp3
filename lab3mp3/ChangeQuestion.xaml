@@ -43,7 +43,7 @@
         <Label Content="Awnser 1" Grid.Column="1" Grid.Row="5" FontSize="20" />
         <TextBox x:Name="Awnser1" Grid.Column="2" Grid.Row="5" Width="200" />
         <Label Content="Awnser 2" Grid.Column="1" Grid.Row="7" FontSize="20" />
-        <TextBox x:Name="Awnser2" Grid.Column="2" Grid.Row="7" Width="200" Background="HotPink"/>
+        <TextBox x:Name="Awnser2" Grid.Column="2" Grid.Row="7" Width="200"/>
         <Label Content="Awnser 3" Grid.Column="1" Grid.Row="9" FontSize="20" />
         <TextBox x:Name="Awnser3" Grid.Column="2" Grid.Row="9" Width="200" />
         <Label Content="Awnser 4" Grid.Column="1" Grid.Row="11" FontSize="20" />
@@ -54,5 +54,6 @@
         <RadioButton x:Name="awnser4Corrent" Grid.Column="3" Grid.Row="11" />
         <Label Content="Correct anwser" Grid.Column="3" Grid.Row="1" FontSize="20" />
         <Button x:Name="Save" Content="Save" Grid.Column="2" Grid.Row="13" Click="Save_Click" />
+        <Button x:Name="ClearDatabasetn" Grid.Column="3" Grid.Row="13" Content="Clear Database"  Click="ClearDatabasetn_Click"/>
     </Grid>
 </Window>
